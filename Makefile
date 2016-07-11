@@ -3,6 +3,9 @@ SHELL := /bin/bash
 install:
 	pip install -r requirements.txt
 
+run:
+	python -m py_compile add_uuids.py
+	python add_uuids.py
 
 # from http://blog.bottlepy.org/2012/07/16/virtualenv-and-makefiles.html
 

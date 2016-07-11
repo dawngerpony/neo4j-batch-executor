@@ -20,7 +20,7 @@ def py2neo():
     from py2neo import Graph, Path
     # graph = Graph()
     graph = Graph("http://localhost:7474/db/data/")
-    graph.data("MATCH (a:Person) RETURN a.name, a.born LIMIT 4")
+    print graph.data("MATCH (o:Organisation) RETURN o LIMIT 4")
 
 if __name__ == "__main__":
     py2neo()
