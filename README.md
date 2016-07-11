@@ -15,3 +15,7 @@ Getting Started
 1. Install dependencies:
 
         make install
+
+1. Run one of the scripts (usage information is inside the :
+
+		./executor.py -h
