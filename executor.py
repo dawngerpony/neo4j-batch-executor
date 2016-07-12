@@ -6,8 +6,9 @@ import argparse
 
 letters = "0123456789abcdef"
 
-def connect():
-    return Graph("http://localhost:7474/db/data/")
+def connect(url):
+    print "URL: {}".format(url)
+    return Graph(url)
 
 def get_statements_count(node_type="Organisation"):
     """ Generate the Cypher statements required to count the number of nodes
@@ -53,15 +54,16 @@ def execute_statements(graph, statements=[]):
 def parse_args():
     parser = argparse.ArgumentParser(description='Split expensive neo4j statements into batches.')
     parser.add_argument('op', choices=['count_nodes','add_upp_identifiers'], help='the operation to execute')
-    parser.add_argument('--node-type', choices=['Organisation'], help="the node type")
+    parser.add_argument('--node-type', default='Organisation', choices=['Organisation'], help='the node type')
+    parser.add_argument('--neo-url', default='http://localhost:7474/db/data/', help='the Neo4j URL')
     return parser.parse_args()
 
 def run(args):
-    graph = connect()
+    graph = connect(args.neo_url)
     statements = []
-    if args.op == "count_nodes":
+    if args.op == 'count_nodes':
         statements = get_statements_count()
-    elif args.op == "add_upp_identifiers":
+    elif args.op == 'add_upp_identifiers':
         statements = get_statements_add_identifier_node_statements()
     else:
         print "Unknown operation '{}'".format(args.op)
@@ -71,5 +73,5 @@ def run(args):
     print "Execution took {} seconds".format(end - start)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     run(parse_args())
